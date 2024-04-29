@@ -125,12 +125,12 @@ const Table  = (props:TRootState) => {
   const gridRef = useRef<VariableSizeGrid>(null);
 
   // Function to scroll to a specific position
-  const scrollToPosition = (scrollLeft: number, scrollTop: number) => {
+  const scrollToPosition = (scrollLeft: number) => {
     if (gridRef.current) {
-      gridRef.current.scrollTo({ scrollLeft, scrollTop });
+      gridRef.current.scrollTo({scrollLeft});
     }
   }; 
-  scrollToPosition(props.scrollMatch,0);
+  scrollToPosition(props.scrollMatch);
   return (
     <div>
       <TableHeader />

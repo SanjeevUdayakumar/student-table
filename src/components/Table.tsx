@@ -2,6 +2,7 @@ import { VariableSizeGrid } from "react-window";
 import { connect, useDispatch } from "react-redux";
 import {  TDispatch, TRootState } from "../models/index";
 import TableHeader from "./TableHeader";
+import { useRef } from "react";
 const Table  = (props:TRootState) => {
   
   const rows = props.studentData;
@@ -121,7 +122,15 @@ const Table  = (props:TRootState) => {
         return null;
     }
   };
+  const listRef = useRef<VariableSizeGrid>(null);
 
+  // Function to scroll to a specific position
+  const scrollToPosition = (scrollOffset: number) => {
+    if (listRef.current) {
+      listRef.current.scrollTo(scrollOffset);
+    }
+  }; 
+  scrollToPosition(props.scrollMatch);
   return (
     <div>
       <TableHeader />
@@ -132,6 +141,8 @@ const Table  = (props:TRootState) => {
       rowHeight={() => rowHeight}
       height={300} // Height of your grid
       width={800} // Width of your grid
+      onScroll={(e)=>dispatch.scrollMatch.handleScrollChange(e.scrollLeft)}
+      initialScrollLeft={props.scrollMatch}
       >
       {itemRenderer}
     </VariableSizeGrid>

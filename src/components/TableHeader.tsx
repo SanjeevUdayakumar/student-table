@@ -24,7 +24,7 @@ const TableHeader = (props:TRootState) => {
   return (
     <div>
       <List
-      ref={listRef}
+        ref={listRef}
         height={60}
         itemCount={rows.length}
         itemSize={180}

@@ -122,19 +122,20 @@ const Table  = (props:TRootState) => {
         return null;
     }
   };
-  const listRef = useRef<VariableSizeGrid>(null);
+  const gridRef = useRef<VariableSizeGrid>(null);
 
   // Function to scroll to a specific position
-  const scrollToPosition = (scrollOffset: number) => {
-    if (listRef.current) {
-      listRef.current.scrollTo(scrollOffset);
+  const scrollToPosition = (scrollLeft: number, scrollTop: number) => {
+    if (gridRef.current) {
+      gridRef.current.scrollTo({ scrollLeft, scrollTop });
     }
   }; 
-  scrollToPosition(props.scrollMatch);
+  scrollToPosition(props.scrollMatch,0);
   return (
     <div>
       <TableHeader />
     <VariableSizeGrid
+      ref={gridRef}
       columnCount={columnCount}
       columnWidth={() => columnWidth}
       rowCount={rowCount}
@@ -142,7 +143,6 @@ const Table  = (props:TRootState) => {
       height={300} // Height of your grid
       width={800} // Width of your grid
       onScroll={(e)=>dispatch.scrollMatch.handleScrollChange(e.scrollLeft)}
-      initialScrollLeft={props.scrollMatch}
       >
       {itemRenderer}
     </VariableSizeGrid>

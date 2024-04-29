@@ -3,11 +3,12 @@ import { connect, useDispatch } from "react-redux";
 import {  TDispatch, TRootState } from "../models/index";
 import TableHeader from "./TableHeader";
 import { useRef } from "react";
+import Input from "./Input";
 const Table  = (props:TRootState) => {
   
   const rows = props.studentData;
   const columnWidth = 180;
-  const columnCount = 5; // Number of columns in your grid
+  const columnCount = 6; // Number of columns in your grid
   const rowHeight = 50;
   const rowCount = rows.length; // Number of rows in your grid
   const dispatch = useDispatch<TDispatch>();
@@ -36,87 +37,96 @@ const Table  = (props:TRootState) => {
         );
       case 1:
         return (
-          <input
-            type="text"
-            key={key}
-            style={style}
-            onBlur={(e) =>
-                dispatch.studentData.handleInputChange({
-                  id: data.id,
-                  propName: "name",
-                  value: e.target.value,
-                })}
-            className="px-5 border-2 outline-none border-blue-500"
-            defaultValue={data.name}
-          />
+          <Input style={style} propName={"name"} key={key} data={data}/>
+          // <input
+          //   type="text"
+          //   key={key}
+          //   style={style}
+          //   onBlur={(e) =>
+          //       dispatch.studentData.handleInputChange({
+          //         id: data.id,
+          //         propName: "name",
+          //         value: e.target.value,
+          //       })}
+          //   className="px-5 border-2 outline-none border-blue-500"
+          //   defaultValue={data.name}
+          // />
         );
       case 2:
         return (
-          <input
-            type="number"
-            key={key}
-            style={style}
-            onBlur={(e) =>
-              dispatch.studentData.handleInputChange({
-                id: data.id,
-                propName: "rollNo",
-                value: e.target.value,
-              })
-            }
-            className="px-5 border-2 outline-none border-blue-500"
-            defaultValue={data.rollNo}
-          />
+          <Input style={style} type={"number"} propName={"rollNo"} key={key} data={data}/>
+
+          // <input
+          //   type="number"
+          //   key={key}
+          //   style={style}
+          //   onBlur={(e) =>
+          //     dispatch.studentData.handleInputChange({
+          //       id: data.id,
+          //       propName: "rollNo",
+          //       value: e.target.value,
+          //     })
+          //   }
+          //   className="px-5 border-2 outline-none border-blue-500"
+          //   defaultValue={data.rollNo}
+          // />
         );
       case 3:
         return (
-          <input
-            type="text"
-            key={key}
-            style={style}
-            onBlur={(e) =>
-              dispatch.studentData.handleInputChange({
-                id: data.id,
-                propName: "stuClass",
-                value: e.target.value,
-              })
-            }
-            className="px-5 border-2 outline-none border-blue-500"
-            defaultValue={data.stuClass}
-          />
+          <Input style={style} propName={"stuClass"} key={key} data={data}/>
+
+        //   <input
+        //     type="text"
+        //     key={key}
+        //     style={style}
+        //     onBlur={(e) =>
+        //       dispatch.studentData.handleInputChange({
+        //         id: data.id,
+        //         propName: "stuClass",
+        //         value: e.target.value,
+        //       })
+        //     }
+        //     className="px-5 border-2 outline-none border-blue-500"
+        //     defaultValue={data.stuClass}
+        //   />
         );
       case 4:
         return (
-          <input
-            type="number"
-            key={key}
-            style={style}
-            onBlur={(e) =>
-              dispatch.studentData.handleInputChange({
-                id: data.id,
-                propName: "height",
-                value: e.target.value,
-              })
-            }
-            className="px-5 border-2 outline-none border-blue-500"
-            defaultValue={data.height}
-          />
+          <Input style={style} type={"number"} propName={"height"} key={key} data={data}/>
+
+          // <input
+          //   type="number"
+          //   key={key}
+          //   style={style}
+          //   onBlur={(e) =>
+          //     dispatch.studentData.handleInputChange({
+          //       id: data.id,
+          //       propName: "height",
+          //       value: e.target.value,
+          //     })
+          //   }
+          //   className="px-5 border-2 outline-none border-blue-500"
+          //   defaultValue={data.height}
+          // />
         );
       case 5:
         return (
-          <input
-            type="number"
-            key={key}
-            style={style}
-            onBlur={(e) =>
-              dispatch.studentData.handleInputChange({
-                id: data.id,
-                propName: "weight",
-                value: e.target.value,
-              })
-            }
-            className="px-5 border-2 outline-none border-blue-500"
-            defaultValue={data.weight}
-          />
+          <Input style={style} type={"number"} propName={"weight"} key={key} data={data}/>
+
+          // <input
+          //   type="number"
+          //   key={key}
+          //   style={style}
+          //   onBlur={(e) =>
+          //     dispatch.studentData.handleInputChange({
+          //       id: data.id,
+          //       propName: "weight",
+          //       value: e.target.value,
+          //     })
+          //   }
+          //   className="px-5 border-2 outline-none border-blue-500"
+          //   defaultValue={data.weight}
+          // />
         );
       default:
         return null;
@@ -155,7 +165,6 @@ const mapState = (state: TRootState) => ({
 });
 
  const mapDispatch = (dispatch: TDispatch) => ({
-  updateStudentData: dispatch.studentData.handleInputChange,
   updateScrollChange: dispatch.scrollMatch.handleScrollChange
 });
 export default connect(mapState,mapDispatch)(Table);

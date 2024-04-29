@@ -3,8 +3,8 @@ import { TDispatch, TRootState } from "../models";
 import { connect, useDispatch } from "react-redux";
 import { useRef } from "react";
 
-const TableHeader = (props:TRootState) => {
-  const rows = ["S.no", "Student Name", "Roll No", "weight", "Height"];
+const TableHeader = (props: TRootState) => {
+  const rows = ["S.no", "Student Name", "Roll No", "Class", "Height", "weight"];
 
   const Column = ({ index, style }: { index: number; style: any }) => (
     <div style={style} className="table-th">
@@ -19,7 +19,7 @@ const TableHeader = (props:TRootState) => {
     if (listRef.current) {
       listRef.current.scrollTo(scrollOffset);
     }
-  }; 
+  };
   scrollToPosition(props.scrollMatch);
   return (
     <div>
@@ -30,7 +30,8 @@ const TableHeader = (props:TRootState) => {
         itemSize={180}
         layout="horizontal"
         width={800}
-        onScroll={(e)=>dispatch.scrollMatch.handleScrollChange(e.scrollOffset)
+        onScroll={(e) =>
+          dispatch.scrollMatch.handleScrollChange(e.scrollOffset)
         }
       >
         {Column}
@@ -39,11 +40,11 @@ const TableHeader = (props:TRootState) => {
   );
 };
 const mapState = (state: TRootState) => ({
-  scrollMatch: state.scrollMatch
+  scrollMatch: state.scrollMatch,
 });
 
- const mapDispatch = (dispatch: TDispatch) => ({
-  updateScrollChange: dispatch.scrollMatch.handleScrollChange
+const mapDispatch = (dispatch: TDispatch) => ({
+  updateScrollChange: dispatch.scrollMatch.handleScrollChange,
 });
 
-export default connect(mapState,mapDispatch)(TableHeader);
+export default connect(mapState, mapDispatch)(TableHeader);

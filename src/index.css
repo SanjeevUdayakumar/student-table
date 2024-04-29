@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+.table-th{
+    @apply h-[50px] w-[180px] px-4 text-xl bg-white border-2 border-blue-400;
+}

@@ -7,7 +7,13 @@ const TableHeader = (props: TRootState) => {
   const rows = ["S.no", "Student Name", "Roll No", "Class", "Height", "weight"];
 
   const Column = ({ index, style }: { index: number; style: any }) => (
-    <div style={style} className="table-th">
+    <div
+      style={style}
+      onClick={() =>
+        dispatch.selectField.updateSelectedField({ col: index })
+      }
+      className="table-th cursor-pointer"
+    >
       {rows[index]}
     </div>
   );
@@ -45,6 +51,7 @@ const mapState = (state: TRootState) => ({
 
 const mapDispatch = (dispatch: TDispatch) => ({
   updateScrollChange: dispatch.scrollMatch.handleScrollChange,
+  updateSelectedField: dispatch.selectField.updateSelectedField,
 });
 
 export default connect(mapState, mapDispatch)(TableHeader);

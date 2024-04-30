@@ -4,12 +4,16 @@ import { StudentData } from "../models/studentData";
 interface Props{
     style:any,
     type?:string,
+    rowIndex:number,
+    colIndex:number,
     propName:any,
     data:StudentData
 }
-const Input = ({style,type="text",propName,data}:Props) => {
-    const dispatch = useDispatch()
+const Input = ({style,type="text",rowIndex,colIndex,propName,data}:Props) => {
+    const dispatch = useDispatch<TDispatch>()
     const key: keyof StudentData = propName;
+    // console.log(store.getState().inputConfig);
+    
     return ( 
         <input
         type={type}
@@ -20,8 +24,9 @@ const Input = ({style,type="text",propName,data}:Props) => {
               propName: propName,
               value: e.target.value,
             })}
-        className="px-5 border-2 outline-none border-blue-500"
+        className={`px-5 border-2 outline-none border-blue-500`}
         defaultValue={data[key]}
+        onClick={()=>dispatch.selectField.updateSelectedField({cell:[rowIndex,colIndex]})}
       />
      );
 }
@@ -30,6 +35,7 @@ const mapState = (state: TRootState) => ({
   });
   
    const mapDispatch = (dispatch: TDispatch) => ({
-    updateStudentData: dispatch.studentData.handleInputChange
+    updateStudentData: dispatch.studentData.handleInputChange,
+    updateSelectField: dispatch.selectField.updateSelectedField
   });
 export default connect(mapState,mapDispatch)(Input);

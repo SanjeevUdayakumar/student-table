@@ -1,6 +1,7 @@
 import { connect, useDispatch } from "react-redux";
 import { TDispatch, TRootState } from "../models";
 import { StudentData } from "../models/studentData";
+import { store } from "../store/store";
 interface Props{
     style:any,
     type?:string,
@@ -12,8 +13,20 @@ interface Props{
 const Input = ({style,type="text",rowIndex,colIndex,propName,data}:Props) => {
     const dispatch = useDispatch<TDispatch>()
     const key: keyof StudentData = propName;
-    // console.log(store.getState().inputConfig);
+   
+   const find = store.getState().inputConfig.find(val =>{ 
+    if(typeof val.id === "object"){
+      const [row,col] = val.id
+      return row === rowIndex && col === colIndex
+    }     
+      return val.id == rowIndex || val.id == colIndex
+    });
     
+    const styleClass = find ? `bg-[${find.style}]` : '';
+if(find && styleClass){
+  console.log(find,styleClass);
+  
+}    
     return ( 
         <input
         type={type}
@@ -24,7 +37,7 @@ const Input = ({style,type="text",rowIndex,colIndex,propName,data}:Props) => {
               propName: propName,
               value: e.target.value,
             })}
-        className={`px-5 border-2 outline-none border-blue-500`}
+        className={`px-5 border-2 outline-none border-blue-500 ${styleClass}`}
         defaultValue={data[key]}
         onClick={()=>dispatch.selectField.updateSelectedField({cell:[rowIndex,colIndex]})}
       />

@@ -149,7 +149,6 @@ const Table = (props: TRootState) => {
         {itemRenderer}
       </VariableSizeGrid>
       {/* Display the selected field  */}
-      <input type="text" style={{backgroundColor:bgColor}} />
       <div className="flex space-x-10 p-10">
         <div className="p-5">
           <div className="text-white text-2xl">

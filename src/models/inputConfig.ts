@@ -12,14 +12,12 @@ export const inputConfig = createModel<RootModel>()({
     name:"inputConfig",
     state:[] as Config[],
     reducers:{
-        addConfig:(state,payload) => {  
-            console.log(payload);
-                      
+        addConfig:(state,payload) => {                        
             const find = state.findIndex(val =>{              
                 if(Number.isInteger(payload.id)){
                     return val.id === payload.id
                 }
-                else if(typeof val.id === "object"){
+                else if(typeof val.id === "object" && !Number.isInteger(payload.id)){
                     const [row,col] = val.id
                     const [row1,col1] = payload.id
                     

@@ -16,7 +16,7 @@ const Input = ({style,type="text",rowIndex,colIndex,propName,data}:Props) => {
    
    const find = store.getState().inputConfig.find(val =>{ 
     
-    if(typeof val.id === "object"){
+    if(typeof val.id === "object" && !Number.isInteger(val.id)){
       const [row,col] = val.id
       return row === rowIndex && col === colIndex
     }else if(val.name == 'row'){
@@ -25,10 +25,10 @@ const Input = ({style,type="text",rowIndex,colIndex,propName,data}:Props) => {
        return val.id == colIndex
     });
     
-    const styleClass = find ? `bg-[${find.style}]` : '';
+    const styleClass = find ? `bg-[${find.style}] bg-[#45d3c3]` : '';
 // if(find && styleClass){
-//   console.log(find,styleClass);
-  
+//   console.log(styleClass);
+
 // }    
     return ( 
         <input

@@ -4,6 +4,8 @@ import { TDispatch, TRootState } from "../models/index";
 import TableHeader from "./TableHeader";
 import { useRef, useState } from "react";
 import Input from "./Input";
+import { find } from "../helpers/findInputInStore";
+import { store } from "../store/store";
 const Table = (props: TRootState) => {
   // handling color
   const [bgColor, setBgColor] = useState("##f0f0ff");
@@ -25,6 +27,14 @@ const Table = (props: TRootState) => {
   }) => {
     const data = rows[rowIndex];
     const key = `${columnIndex}-${rowIndex}`;
+    let styleClass = '';
+    
+    //get the style of particular element    
+    if(props.inputConfig.length > 0){      
+         const findData = find(rowIndex,'row')
+         
+         styleClass = findData ? `bg-[${findData.style}]` : '';                  
+    }    
     // Render each cell based on the column index
     switch (columnIndex) {
       case 0:
@@ -35,7 +45,7 @@ const Table = (props: TRootState) => {
             onClick={() =>
               dispatch.selectField.updateSelectedField({ row: rowIndex })
             }
-            className={`px-5 cursor-pointer border-2 outline-none bg-white border-blue-500 `}
+            className={`px-5 cursor-pointer border-2 outline-none bg-white border-blue-500 ${styleClass}`}
           >
             {rowIndex + 1}
           </div>
@@ -117,7 +127,7 @@ const Table = (props: TRootState) => {
   const handleAddColor = () =>{
         const {row, col, cell}:{row:number | null,col:number | null,cell:number[] | null} = props.selectField;
         Number.isInteger(row) ? dispatch.inputConfig.addConfig({id:row,name:'row',style:bgColor}):
-        col ? dispatch.inputConfig.addConfig({id:col,name:'col',style:bgColor}):
+        Number.isInteger(col) ? dispatch.inputConfig.addConfig({id:col,name:'col',style:bgColor}):
         dispatch.inputConfig.addConfig({id:cell,style:bgColor})
         
   }
@@ -168,6 +178,7 @@ const mapState = (state: TRootState) => ({
   studentData: state.studentData,
   scrollMatch: state.scrollMatch,
   selectField: state.selectField,
+  inputConfig: state.inputConfig,
 });
 
 const mapDispatch = (dispatch: TDispatch) => ({

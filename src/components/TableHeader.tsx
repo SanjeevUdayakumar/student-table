@@ -2,21 +2,31 @@ import { FixedSizeList, FixedSizeList as List } from "react-window";
 import { TDispatch, TRootState } from "../models";
 import { connect, useDispatch } from "react-redux";
 import { useRef } from "react";
+import { store } from "../store/store";
+import { find } from "../helpers/findInputInStore";
 
 const TableHeader = (props: TRootState) => {
   const rows = ["S.no", "Student Name", "Roll No", "Class", "Height", "weight"];
 
-  const Column = ({ index, style }: { index: number; style: any }) => (
-    <div
-      style={style}
-      onClick={() =>
-        dispatch.selectField.updateSelectedField({ col: index })
-      }
-      className="table-th cursor-pointer"
-    >
-      {rows[index]}
-    </div>
-  );
+  const Column = ({ index, style }: { index: number; style: any }) => {
+    let styleClass = '';
+    //get the style of particular element
+    if(store.getState().inputConfig.length > 0){      
+         const findData = find(index,'col')
+         styleClass = findData ? `bg-[${findData.style}]` : '';         
+    }    
+   return (
+      <div
+        style={style}
+        onClick={() =>
+          dispatch.selectField.updateSelectedField({ col: index })
+        }
+        className={`table-th cursor-pointer ${styleClass}  bg-blue-500`}
+      >
+        {rows[index]}
+      </div>
+    );
+  }
   const dispatch = useDispatch<TDispatch>();
   const listRef = useRef<FixedSizeList>(null);
 
@@ -47,6 +57,7 @@ const TableHeader = (props: TRootState) => {
 };
 const mapState = (state: TRootState) => ({
   scrollMatch: state.scrollMatch,
+  inputConfig: state.inputConfig
 });
 
 const mapDispatch = (dispatch: TDispatch) => ({

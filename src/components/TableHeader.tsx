@@ -9,11 +9,11 @@ const TableHeader = (props: TRootState) => {
   const rows = ["S.no", "Student Name", "Roll No", "Class", "Height", "weight"];
 
   const Column = ({ index, style }: { index: number; style: any }) => {
-    let styleClass = '';
+    let styleClass = 'bg-white';
     //get the style of particular element
     if(store.getState().inputConfig.length > 0){      
          const findData = find(index,'col')
-         styleClass = findData ? `bg-[${findData.style}]` : '';         
+         styleClass = findData ? `bg-[${findData.style}] bg-blue-400` : 'bg-white';         
     }    
    return (
       <div
@@ -21,7 +21,7 @@ const TableHeader = (props: TRootState) => {
         onClick={() =>
           dispatch.selectField.updateSelectedField({ col: index })
         }
-        className={`table-th cursor-pointer ${styleClass}  bg-blue-500`}
+        className={`table-th cursor-pointer ${styleClass}`}
       >
         {rows[index]}
       </div>

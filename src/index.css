@@ -5,5 +5,5 @@
 
 
 .table-th{
-    @apply h-[50px] w-[180px] px-4 text-xl bg-white border-2 border-blue-400;
+    @apply h-[50px] w-[180px] px-4 text-xl  border-2 border-blue-400;
 }

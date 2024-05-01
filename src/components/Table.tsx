@@ -115,8 +115,8 @@ const Table = (props: TRootState) => {
 
   // handleAddColor
   const handleAddColor = () =>{
-        const {row, col, cell} = props.selectField;
-        row ? dispatch.inputConfig.addConfig({id:row,name:'row',style:bgColor}):
+        const {row, col, cell}:{row:number | null,col:number | null,cell:number[] | null} = props.selectField;
+        Number.isInteger(row) ? dispatch.inputConfig.addConfig({id:row,name:'row',style:bgColor}):
         col ? dispatch.inputConfig.addConfig({id:col,name:'col',style:bgColor}):
         dispatch.inputConfig.addConfig({id:cell,style:bgColor})
         

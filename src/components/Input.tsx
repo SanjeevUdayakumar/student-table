@@ -26,10 +26,10 @@ const Input = ({style,type="text",rowIndex,colIndex,propName,data}:Props) => {
     });
     
     const styleClass = find ? `bg-[${find.style}]` : '';
-if(find && styleClass){
-  console.log(find,styleClass);
+// if(find && styleClass){
+//   console.log(find,styleClass);
   
-}    
+// }    
     return ( 
         <input
         type={type}

@@ -30,8 +30,9 @@ const Table = (props: TRootState) => {
     
     //get the style of particular element    
     if(props.inputConfig.length > 0){      
-         const findData = find(rowIndex,'row')   
-         styleClass = findData ? `${findData.style}` : '';                  
+         const findData = find(rowIndex,'row')            
+         styleClass = findData ? `${findData.style}` : 'white'; 
+                          
     }    
     // Render each cell based on the column index
     switch (columnIndex) {

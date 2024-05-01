@@ -10,31 +10,31 @@ interface Props{
     propName:any,
     data:StudentData
 }
-const Input = ({style,type="text",rowIndex,colIndex,propName,data}:Props) => {
+const Input = ({style,type="text",rowIndex,colIndex,propName,data,...others}:Props) => {
     const dispatch = useDispatch<TDispatch>()
     const key: keyof StudentData = propName;
    
-   const find = store.getState().inputConfig.find(val =>{ 
+    // find config by reversing it to know the latest added config
+    // Made an copy of config from rematch store while we can't reverse the immutable state
+   const find = [...store.getState().inputConfig].reverse().find(val =>{ 
+    if(val.name == 'row'){            
+      return val.id == rowIndex
+    }  
+    if(val.name == 'col'){      
+      return val.id == colIndex
+    }  
     if(typeof val.id === "object" && !Number.isInteger(val.id) && val.id !=null){
       const [row,col] = val.id
       return row === rowIndex && col === colIndex
-    }else if(val.name == 'row'){
-      return val.id == rowIndex
-    }     
-       return val.id == colIndex
+    } 
     });
-   if(find){
-    console.log(find);
 
-   }    
-    // const styleClass = find ? `bg-[${find.style}] bg-[#45d3c3]` : '';
     const styleClass = find ? `${find.style}` : '';
  
     return ( 
         <input
         type={type}
         style={styleClass!== ''?{...style,backgroundColor:styleClass}:{...style,backgroundColor:"white"}}
-        // style={style}
         onBlur={(e) =>
             dispatch.studentData.handleInputChange({
               id: data.id,
@@ -48,7 +48,8 @@ const Input = ({style,type="text",rowIndex,colIndex,propName,data}:Props) => {
      );
 }
 const mapState = (state: TRootState) => ({
-    studentData: state.studentData
+    studentData: state.studentData,
+    inputConfig: state.inputConfig
   });
   
    const mapDispatch = (dispatch: TDispatch) => ({

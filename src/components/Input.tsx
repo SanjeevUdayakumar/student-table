@@ -15,11 +15,14 @@ const Input = ({style,type="text",rowIndex,colIndex,propName,data}:Props) => {
     const key: keyof StudentData = propName;
    
    const find = store.getState().inputConfig.find(val =>{ 
+    
     if(typeof val.id === "object"){
       const [row,col] = val.id
       return row === rowIndex && col === colIndex
+    }else if(val.name == 'row'){
+      return val.id == rowIndex
     }     
-      return val.id == rowIndex || val.id == colIndex
+       return val.id == colIndex
     });
     
     const styleClass = find ? `bg-[${find.style}]` : '';

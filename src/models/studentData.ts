@@ -91,10 +91,8 @@ export const studentData = createModel<RootModel>()({
           [action.propName]: action.value,
         };
       }
-      console.log(temp);
 
       return temp;
-    },
-    deleteRow: (state, payload) => {},
+    }
   },
 });

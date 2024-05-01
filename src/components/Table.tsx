@@ -116,8 +116,8 @@ const Table = (props: TRootState) => {
   // handleAddColor
   const handleAddColor = () =>{
         const {row, col, cell} = props.selectField;
-        row ? dispatch.inputConfig.addConfig({id:row,style:bgColor}):
-        col ? dispatch.inputConfig.addConfig({id:col,style:bgColor}):
+        row ? dispatch.inputConfig.addConfig({id:row,name:'row',style:bgColor}):
+        col ? dispatch.inputConfig.addConfig({id:col,name:'col',style:bgColor}):
         dispatch.inputConfig.addConfig({id:cell,style:bgColor})
         
   }
@@ -137,6 +137,7 @@ const Table = (props: TRootState) => {
         {itemRenderer}
       </VariableSizeGrid>
       {/* Display the selected field  */}
+      <input type="text" className={`bg-[${bgColor}]`} />
       <div className="flex space-x-10 p-10">
         <div className="p-5">
           <div className="text-white text-2xl">

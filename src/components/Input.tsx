@@ -15,8 +15,7 @@ const Input = ({style,type="text",rowIndex,colIndex,propName,data}:Props) => {
     const key: keyof StudentData = propName;
    
    const find = store.getState().inputConfig.find(val =>{ 
-    
-    if(typeof val.id === "object" && !Number.isInteger(val.id)){
+    if(typeof val.id === "object" && !Number.isInteger(val.id) && val.id !=null){
       const [row,col] = val.id
       return row === rowIndex && col === colIndex
     }else if(val.name == 'row'){
@@ -24,16 +23,18 @@ const Input = ({style,type="text",rowIndex,colIndex,propName,data}:Props) => {
     }     
        return val.id == colIndex
     });
-    
-    const styleClass = find ? `bg-[${find.style}] bg-[#45d3c3]` : '';
-// if(find && styleClass){
-//   console.log(styleClass);
+   if(find){
+    console.log(find);
 
-// }    
+   }    
+    // const styleClass = find ? `bg-[${find.style}] bg-[#45d3c3]` : '';
+    const styleClass = find ? `${find.style}` : '';
+ 
     return ( 
         <input
         type={type}
-        style={style}
+        style={styleClass!== ''?{...style,backgroundColor:styleClass}:{...style,backgroundColor:"white"}}
+        // style={style}
         onBlur={(e) =>
             dispatch.studentData.handleInputChange({
               id: data.id,

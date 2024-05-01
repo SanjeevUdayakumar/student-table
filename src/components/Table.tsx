@@ -2,13 +2,12 @@ import { VariableSizeGrid } from "react-window";
 import { connect, useDispatch } from "react-redux";
 import { TDispatch, TRootState } from "../models/index";
 import TableHeader from "./TableHeader";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Input from "./Input";
 import { find } from "../helpers/findInputInStore";
-import { store } from "../store/store";
 const Table = (props: TRootState) => {
   // handling color
-  const [bgColor, setBgColor] = useState("##f0f0ff");
+  const [bgColor, setBgColor] = useState("#f0f0ff");
 
   const rows = props.studentData;
   const columnWidth = 180;
@@ -31,9 +30,8 @@ const Table = (props: TRootState) => {
     
     //get the style of particular element    
     if(props.inputConfig.length > 0){      
-         const findData = find(rowIndex,'row')
-         
-         styleClass = findData ? `bg-[${findData.style}]` : '';                  
+         const findData = find(rowIndex,'row')   
+         styleClass = findData ? `${findData.style}` : '';                  
     }    
     // Render each cell based on the column index
     switch (columnIndex) {
@@ -41,7 +39,7 @@ const Table = (props: TRootState) => {
         return (
           <div
             key={key}
-            style={style}
+            style={styleClass!== ''?{...style,backgroundColor:styleClass}:{...style,backgroundColor:"white"}}
             onClick={() =>
               dispatch.selectField.updateSelectedField({ row: rowIndex })
             }
@@ -115,12 +113,15 @@ const Table = (props: TRootState) => {
   const gridRef = useRef<VariableSizeGrid>(null);
 
   // Function to scroll to a specific position
-  const scrollToPosition = (scrollLeft: number) => {
+  useEffect(() => {
+    scrollToPosition(props.scrollMatch);
+  }, [props.scrollMatch]);
+
+  const scrollToPosition = (scrollLeft:number) => {
     if (gridRef.current) {
       gridRef.current.scrollTo({ scrollLeft });
     }
   };
-  scrollToPosition(props.scrollMatch);
 
 
   // handleAddColor
@@ -147,7 +148,7 @@ const Table = (props: TRootState) => {
         {itemRenderer}
       </VariableSizeGrid>
       {/* Display the selected field  */}
-      <input type="text" className={`bg-[${bgColor}]`} />
+      <input type="text" style={{backgroundColor:bgColor}} />
       <div className="flex space-x-10 p-10">
         <div className="p-5">
           <div className="text-white text-2xl">

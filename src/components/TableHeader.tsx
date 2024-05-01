@@ -1,7 +1,7 @@
 import { FixedSizeList, FixedSizeList as List } from "react-window";
 import { TDispatch, TRootState } from "../models";
 import { connect, useDispatch } from "react-redux";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { store } from "../store/store";
 import { find } from "../helpers/findInputInStore";
 
@@ -13,11 +13,13 @@ const TableHeader = (props: TRootState) => {
     //get the style of particular element
     if(store.getState().inputConfig.length > 0){      
          const findData = find(index,'col')
-         styleClass = findData ? `bg-[${findData.style}] bg-blue-400` : 'bg-white';         
+        //  styleClass = findData ? `bg-[${findData.style}] bg-blue-400` : 'bg-white';         
+         styleClass = findData ? `${findData.style}` : '';         
     }    
+    
    return (
       <div
-        style={style}
+        style={styleClass!== ''?{...style,backgroundColor:styleClass}:{...style,backgroundColor:"white"}}
         onClick={() =>
           dispatch.selectField.updateSelectedField({ col: index })
         }
@@ -36,7 +38,11 @@ const TableHeader = (props: TRootState) => {
       listRef.current.scrollTo(scrollOffset);
     }
   };
-  scrollToPosition(props.scrollMatch);
+    useEffect(() => {
+      scrollToPosition(props.scrollMatch);
+    }, [props.scrollMatch]);
+  
+   
   return (
     <div>
       <List

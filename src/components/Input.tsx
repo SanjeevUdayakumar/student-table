@@ -10,7 +10,7 @@ interface Props{
     propName:any,
     data:StudentData
 }
-const Input = ({style,type="text",rowIndex,colIndex,propName,data,...others}:Props) => {
+const Input = ({style,type="text",rowIndex,colIndex,propName,data}:Props) => {
     const dispatch = useDispatch<TDispatch>()
     const key: keyof StudentData = propName;
    

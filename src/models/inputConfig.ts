@@ -25,8 +25,17 @@ export const inputConfig = createModel<RootModel>()({
                   }   
                
             })
-            const temp  = state;            
-            find >=0 ? temp[find] = payload  :  temp.push(payload)
+            let temp = state;
+            if(find >=0){
+                 temp = temp.filter((val,index) =>{
+                    console.log(find,index);
+                    return index !== find
+                    
+                  })    
+            }
+            temp.push(payload)                 
+
+            // find >=0 ? temp[find] = payload  :  temp.push(payload)
 
             // console.log(find);
             // console.log(temp);
